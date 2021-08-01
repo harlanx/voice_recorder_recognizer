@@ -18,6 +18,14 @@ class _SpeechRecognizerPageState extends State<SpeechRecognizerPage> with Automa
   String _speechResult = 'Press the mic button and start speaking.';
   ValueNotifier<bool> _isListening = ValueNotifier(false);
 
+  final Map<String, dynamic> _commandsDesc = {
+    'email': 'write email + <body content>',
+    'sms': 'compose message + <message text>',
+    'map': 'view map of + <name of place>',
+    'launcher': 'open + <website.com>',
+    'search': 'search + <search query>'
+  };
+
   @override
   bool get wantKeepAlive => true;
 
@@ -40,11 +48,56 @@ class _SpeechRecognizerPageState extends State<SpeechRecognizerPage> with Automa
                     tooltip: 'Copy text',
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: _speechResult)).then(
-                        (value) => ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Copied to Clipboard'),
-                            behavior: SnackBarBehavior.floating,
+                        (value) {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Copied to Clipboard'),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.help),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Available Commands',
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                              Table(
+                                children: _commandsDesc.entries
+                                    .map((e) => TableRow(children: [
+                                          Text(
+                                            e.key,
+                                            style: Theme.of(context).textTheme.subtitle2,
+                                          ),
+                                          Text(
+                                            e.value,
+                                            style: Theme.of(context).textTheme.caption,
+                                          )
+                                        ]))
+                                    .toList(),
+                              ),
+                            ],
                           ),
+                          actions: [
+                            TextButton(
+                              child: Text('OK'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -99,6 +152,7 @@ class _SpeechRecognizerPageState extends State<SpeechRecognizerPage> with Automa
                     }
                   },
                 ).catchError((e) {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Please install or enable Google app to allow Speech Recognition Service'),
