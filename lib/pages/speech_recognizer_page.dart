@@ -75,6 +75,10 @@ class _SpeechRecognizerPageState extends State<SpeechRecognizerPage> with Automa
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                               Table(
+                                columnWidths: {
+                                  0: FlexColumnWidth(0.3),
+                                  1: FlexColumnWidth(0.7),
+                                },
                                 children: _commandsDesc.entries
                                     .map((e) => TableRow(children: [
                                           Text(
