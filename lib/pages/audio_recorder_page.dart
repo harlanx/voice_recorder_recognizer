@@ -159,7 +159,9 @@ class AudioRecorderPageState extends State<AudioRecorderPage> with AutomaticKeep
         _currentFilePath = '${_folderPath.path}$_fileName';
         setState(() {});
         _recorder!.startRecorder(toFile: _currentFilePath).then((value) {
-          _isRecording = true;
+          setState(() {
+            this._isRecording = true;
+          });
           startTimer();
         });
       } else {
