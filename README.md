@@ -1,6 +1,6 @@
 # voice_recorder_recognizer
 
-An audio recorder and speech to text with commands recognition created using Dart Language wih Flutter SDK
+An audio recorder and speech to text with commands recognition created using Dart Language with Flutter SDK
 
 ### Voice Commands
  - Email (Compose email)
