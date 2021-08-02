@@ -74,23 +74,38 @@ class _SpeechRecognizerPageState extends State<SpeechRecognizerPage> with Automa
                                 'Available Commands',
                                 style: Theme.of(context).textTheme.headline6,
                               ),
+                              SizedBox(height: 5),
                               Table(
                                 columnWidths: {
                                   0: FlexColumnWidth(0.3),
                                   1: FlexColumnWidth(0.7),
                                 },
-                                children: _commandsDesc.entries
-                                    .map((e) => TableRow(children: [
-                                          Text(
-                                            e.key,
-                                            style: Theme.of(context).textTheme.subtitle2,
-                                          ),
-                                          Text(
-                                            e.value,
-                                            style: Theme.of(context).textTheme.caption,
-                                          )
-                                        ]))
-                                    .toList(),
+                                children: [
+                                  TableRow(
+                                    children: [
+                                      Text(
+                                        'Command',
+                                        style: Theme.of(context).textTheme.subtitle2,
+                                      ),
+                                      Text(
+                                        'Sentence Syntax',
+                                        style: Theme.of(context).textTheme.caption,
+                                      )
+                                    ],
+                                  ),
+                                  ..._commandsDesc.entries
+                                      .map((e) => TableRow(children: [
+                                            Text(
+                                              e.key,
+                                              style: Theme.of(context).textTheme.subtitle2,
+                                            ),
+                                            Text(
+                                              e.value,
+                                              style: Theme.of(context).textTheme.caption,
+                                            )
+                                          ]))
+                                      .toList(),
+                                ],
                               ),
                             ],
                           ),
